@@ -34,39 +34,34 @@ class AdminController extends Controller
     public function manageusers(Request $request)
     {
 		
-		
-        //User::with('UserDetails')->where('role','=','1')->get()
-//		$users = User::with('UserDetails')->where('role','=','1')->paginate(3);
-		//print_r($users);
-		
 		$query = User::with('UserDetails')->where('role', '=', '1');
 
 		// Filter by Name
 		if ($request->filled('name')) {
 			$query->whereHas('UserDetails', function ($q) use ($request) {
-				$q->where('first_name', $request->name);
-				$q->orwhere('last_name', $request->name);
+				$q->where('first_name','LIKE', '%'.$request->name.'%');
+				$q->orwhere('last_name','LIKE', '%'.$request->name.'%');
 			});
 		}
 
 		// Filter by Account Number
 		if ($request->filled('account_number')) {
 			$query->whereHas('UserDetails', function ($q) use ($request) {
-				$q->where('account_number', $request->account_number);
+				$q->where('account_number','LIKE', '%'.$request->account_number.'%');
 			});
 		}
 		
 		// Filter by Balance
 		if ($request->filled('balance')) {
 			$query->whereHas('UserDetails', function ($q) use ($request) {
-				$q->where('final_balance', '>=', $request->balance); // Change condition as needed
-				$q->orwhere('open_balance', '>=', $request->balance); // Change condition as needed
+				$q->where('final_balance', '>=', $request->balance); 
+				$q->orwhere('open_balance', '>=', $request->balance); 
 			});
 		}
 		
 		$users = $query->paginate(10);
 		
-		return view('admin/user_list',compact('users'));
+		return view('admin/user_list',compact('users','request'));
     }
 	
 	
