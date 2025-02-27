@@ -26,13 +26,13 @@
 				  
 					<div class="row">
 						<div class="col-md-2">
-							<input type="text" name="name" class="form-control" placeholder="Search by Name" value="">
+							<input type="text" name="name" class="form-control" placeholder="Search by Name" value="{{ request('name') }}">
 						</div>
 						<div class="col-md-3">
-							<input type="text" name="account_number" class="form-control" placeholder="Search by Account Number" value="">
+							<input type="text" name="account_number" class="form-control" placeholder="Search by Account Number" value="{{ request('account_number') }}">
 						</div>
 						<div class="col-md-3">
-							<input type="number" name="balance" class="form-control" placeholder="Minimum Balance" value="">
+							<input type="number" name="balance" class="form-control" placeholder="Minimum Balance" value="{{ request('balance') }}">
 						</div>
 						<div class="col-md-4">
 							<button type="submit" class="btn btn-primary">Search</button>
