@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">2-factors authentication</div>
+    <div class="card-header">Two-factors(2FA) authentication</div>
 
     <div class="card-body">
         <p>
-          2-factors authentication is currently
-          <span class='badge bg-warning'>disabled</span>. To enable:
+          Two factors(2FA) authentication is 
+          <span class='badge bg-warning'>disabled</span>. Please enable:
         </p>
 
         <ol class="list-left-align">
