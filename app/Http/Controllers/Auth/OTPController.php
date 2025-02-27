@@ -74,7 +74,6 @@ class OTPController extends Controller
             $user->email,
             $secret
         );
-//print_r($qr_code);
         
         session([ "2fa_secret" => $secret]);
 
@@ -92,13 +91,10 @@ class OTPController extends Controller
 		$secret11 = $google2fa->getCurrentOtp($secret);
         $user = Auth::user();
 		
-		print_r($request->input('otp'));
 		$otpone = $request->input('otp');
 		
 		$valid = $google2fa->verify($secret11, $secret);
 		
-		//echo "----".$google2fa->getCurrentOtp($secret);
-		//exit;
         if ($google2fa->verify($request->input('otp'), $secret)) {
             
             $user->google2fa_secret = $secret;
@@ -106,9 +102,9 @@ class OTPController extends Controller
 
             // avoid double OTP check
             session(["2fa_checked" => true]);
+			session(["twofa_auth_done" => 1]);
 			if (isset(Auth::user()->role) && Auth::user()->role == 'admin') 
             {
-				
 				return redirect()->route('admin.home');
             }
             else if (isset(Auth::user()->role) && Auth::user()->role == 'user') 
