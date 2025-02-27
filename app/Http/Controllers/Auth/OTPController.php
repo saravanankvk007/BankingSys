@@ -75,9 +75,7 @@ class OTPController extends Controller
             $secret
         );
 //print_r($qr_code);
-        print_r($secret1);
-		echo "----";
-        print_r($secret);
+        
         session([ "2fa_secret" => $secret]);
 
         return view('auth.2fa', ["qr_code" => $qr_code,"QR_Image" => $QR_Image]);
