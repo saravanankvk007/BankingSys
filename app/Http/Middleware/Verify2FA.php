@@ -22,7 +22,7 @@ class Verify2FA
         }
 
         // 2FA not enabled => no need to check
-        if (is_null(Auth::user()->twofa_secret)) {
+        if (is_null(Auth::user()->google2fa_secret)) {
             return $next($request);
         }
 
@@ -33,7 +33,7 @@ class Verify2FA
 
         // at this point user must provide a valid OTP
         // but we must avoid an infinite loop
-        if (request()->is('login/otp')) {
+        if (request()->is('login/twofaotp')) {
             return $next($request);
         }
 
