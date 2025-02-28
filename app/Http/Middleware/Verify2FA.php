@@ -37,7 +37,7 @@ class Verify2FA
             return $next($request);
         }
 
-        return redirect(action("Auth\OTPController@show"));
+       // return redirect(action("Auth\OTPController@show"));
 		
         return $next($request);
     }
