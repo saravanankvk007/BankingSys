@@ -72,7 +72,7 @@
 			@php
 				if (isset(Auth::user()->role) && Auth::user()->role == 'admin'){
 					$urls ='admin/home';
-				}else if(isset(Auth::user()->role) &&  Auth::user()->role == 'admin') {
+				}else if(isset(Auth::user()->role) &&  Auth::user()->role == 'user') {
 					$urls ='user/home';
 				}else{
 					$urls = '/';
@@ -125,7 +125,7 @@
 						@endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->role }}
+								{{ Session::get('username')}}  ({{ Auth::user()->role }})
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
