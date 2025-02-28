@@ -109,31 +109,11 @@ class AuthLoginController extends Controller
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
 			
-            if (auth()->user()->role == 'admin') 
-            {
+			if(isset(auth()->user()->google2fa_secret) && auth()->user()->google2fa_secret != ''){
 				
-				//return redirect()->route('admin.home');
-				
-				if(isset(auth()->user()->google2fa_secret) && auth()->user()->google2fa_secret != ''){
-					
-					return redirect()->route('login.twofaotp');
-				}else{
-					return redirect()->route('login.twofaauth');
-				}
-            }
-            else if (auth()->user()->role == 'user') 
-            {
-				//return redirect()->route('user.home');
-				if(isset(auth()->user()->google2fa_secret) && auth()->user()->google2fa_secret != ''){
-					
-					return redirect()->route('login.twofaotp');
-				}else{
-					return redirect()->route('login.twofaauth');
-				}
-					
-            }else{
-				echo "AAAAAAAAA";
-				exit;
+				return redirect()->route('login.twofaotp');
+			}else{
+				return redirect()->route('login.twofaauth');
 			}
         }
         else
@@ -148,6 +128,7 @@ class AuthLoginController extends Controller
         \Auth::logout();
 		Session::forget('2fa_checked');
 		Session::forget('twofa_auth_done');
+		Session::forget('username');
         return redirect("login")->with('success', 'Logout successfully');;
     }
 	

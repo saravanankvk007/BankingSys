@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FAQRCode\Google2FA;
+use App\Models\userAccountDetail;
+
 
 class OTPController extends Controller
 {
@@ -28,6 +30,8 @@ class OTPController extends Controller
         if ($google2fa->verify($request->input('otp'), $secret)) {
             session(["2fa_checked" => true]);
             session(["twofa_auth_done" => 1]);
+			$username = userAccountDetail::where('user_id',Auth::user()->id)->first();
+			session(["username" => ($username->first_name.' '.$username->last_name)]);
 			if (isset(Auth::user()->role) && Auth::user()->role == 'admin') 
             {
 				return redirect()->route('admin.home');
@@ -103,6 +107,9 @@ class OTPController extends Controller
             // avoid double OTP check
             session(["2fa_checked" => true]);
 			session(["twofa_auth_done" => 1]);
+			$username = userAccountDetail::where('user_id',Auth::user()->id)->first();
+			session(["username" => ($username->first_name.' '.$username->last_name)]);
+			
 			if (isset(Auth::user()->role) && Auth::user()->role == 'admin') 
             {
 				return redirect()->route('admin.home');
